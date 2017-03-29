@@ -6,7 +6,7 @@ function SeatReservation(name, initialMeal) {
     
     self.formattedPrice = ko.computed(function() {
         let price = self.meal().price;
-        return price ? `$${price.toFixed(2)}` : "None";
+        return price ? "$" + price.toFixed(2) : "None";
     });
 }
 
@@ -28,17 +28,20 @@ function ReservationsViewModel() {
     ]);
     
     // Operations
-    self.addSeat = () => {
-        self.seats.push(new SeatReservation("", self.availableMeals[1]));
+    self.addSeat = function() {
+        self.seats.push(new SeatReservation("Joey", self.availableMeals[1]));
     };
-
-    self.totalSurcharge = ko.computed(() => {
+    
+    self.removeSeat = function(seat) {
+        self.seats.remove(seat);
+    };
+    
+    self.totalSurcharge = ko.computed(function() {
         let total = 0;
         for (let i=0; i < self.seats().length; i++)
             total += self.seats()[i].meal().price;
         return total;
     });
-
 }
 
 ko.applyBindings(new ReservationsViewModel());
