@@ -5,9 +5,10 @@
 </head>
 <body>
 
-<h2>Your seat reservations</h2>
+	<h2>Your seat reservations</h2>
 
 	<table>
+
 	    <thead>
 	    	<tr>
 	        <th>Passenger name</th>
@@ -16,18 +17,18 @@
 	        <th></th>
 	    	</tr>
 	    </thead>
+
 	    <tbody data-bind="foreach: seats">
 	        <tr>
-	            <td data-bind="text: name"></td>
-	            <td data-bind="text: meal().mealName"></td>
-	            <td><em>$</em><span data-bind="text: meal().price"></span></td>
+	            <td><input data-bind="value: name" /></td>
+	            <td><select data-bind="options: $root.availableMeals, value: meal, optionsText: 'mealName'"></select></td>
+	            <td data-bind="text: formattedPrice"></td>
 	        </tr>
 	    </tbody>
 	</table>
 
 	<br />
 	<button data-bind="click: addSeat">Reserve another seat</button>
-
 
 	<script src='lib/knockout-3.4.2.js' type='text/javascript'></script>
 	<script src='js/main.js' type='text/javascript'></script>
