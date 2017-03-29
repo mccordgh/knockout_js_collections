@@ -1,13 +1,13 @@
 // Class to represent a row in the seat reservations grid
 function SeatReservation(name, initialMeal) {
-    var self = this;
+    let self = this;
     self.name = name;
     self.meal = ko.observable(initialMeal);
 }
 
 // Overall viewmodel for this screen, along with initial state
 function ReservationsViewModel() {
-    var self = this;
+    let self = this;
 
     // Non-editable catalog data - would come from the server
     self.availableMeals = [
@@ -22,6 +22,12 @@ function ReservationsViewModel() {
         new SeatReservation("Steve", self.availableMeals[1]),
         new SeatReservation("Bert", self.availableMeals[2])
     ]);
+
+    // Operations
+    self.addSeat = () => {
+        self.seats.push(new SeatReservation("Joey", self.availableMeals[1]));
+    };
+
 }
 
 ko.applyBindings(new ReservationsViewModel());
