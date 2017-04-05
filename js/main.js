@@ -1,42 +1,42 @@
 // Class to represent a row in the seat reservations grid
-function SeatReservation(name, initialMeal) {
+const SeatReservation = function(name, initialMeal) {
     let self = this;
     self.name = name;
     self.meal = ko.observable(initialMeal);
     
-    self.formattedPrice = ko.computed(function() {
+    self.formattedPrice = ko.computed(() => {
         let price = self.meal().price;
-        return price ? "$" + price.toFixed(2) : "None";
+        return price ? `$${price.toFixed(2)}` : 'None';
     });
 }
 
 // Overall viewmodel for this screen, along with initial state
-function ReservationsViewModel() {
+const ReservationsViewModel = function() {
     let self = this;
 
     // Non-editable catalog data - would come from the server
     self.availableMeals = [
-        { mealName: "Standard (sandwich)", price: 0 },
-        { mealName: "Premium (lobster)", price: 34.95 },
-        { mealName: "Ultimate (whole zebra)", price: 290 }
+        { mealName: 'Standard (sandwich)', price: 0 },
+        { mealName: 'Premium (lobster)', price: 34.95 },
+        { mealName: 'Ultimate (whole zebra)', price: 290 }
     ];    
 
     // Editable data
     self.seats = ko.observableArray([
-        new SeatReservation("Steve", self.availableMeals[1]),
-        new SeatReservation("Bert", self.availableMeals[2])
+        new SeatReservation('Steve', self.availableMeals[1]),
+        new SeatReservation('Bert', self.availableMeals[2])
     ]);
     
     // Operations
-    self.addSeat = function() {
-        self.seats.push(new SeatReservation("Joey", self.availableMeals[1]));
+    self.addSeat = () => {
+        self.seats.push(new SeatReservation('Joey', self.availableMeals[1]));
     };
     
-    self.removeSeat = function(seat) {
+    self.removeSeat = (seat) => {
         self.seats.remove(seat);
     };
     
-    self.totalSurcharge = ko.computed(function() {
+    self.totalSurcharge = ko.computed(() => {
         let total = 0;
         for (let i=0; i < self.seats().length; i++)
             total += self.seats()[i].meal().price;
